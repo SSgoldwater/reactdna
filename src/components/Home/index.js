@@ -23,9 +23,12 @@ class Home extends Component {
       <div>
         Homepage
         <br />
-        Count: { this.state.count }
+        <p id={ `count` }>
+          Count: { this.state.count }
+        </p>
         <br />
         <button
+          id={ `addButton` }
           onClick={ this._add }
         >Add</button>
         <button

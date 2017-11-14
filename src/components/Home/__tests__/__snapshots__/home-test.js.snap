@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home adds 1`] = `"Count: 0"`;
+
+exports[`Home adds 2`] = `"Count: 1"`;
