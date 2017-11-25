@@ -32,6 +32,7 @@ class Home extends Component {
           onClick={ this._add }
         >Add</button>
         <button
+          id={ `subtractButton` }
           onClick={ this._subtract }
         >!Add</button>
       </div>
