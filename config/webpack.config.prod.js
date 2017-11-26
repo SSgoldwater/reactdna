@@ -63,11 +63,7 @@ var config = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     })
-  ],
-  devServer: {
-    hot: true,
-    inline: true
-  }
+  ]
 };
 
 module.exports = config;
