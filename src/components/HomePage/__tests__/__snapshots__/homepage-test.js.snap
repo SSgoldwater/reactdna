@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Home adds and subtracts 1`] = `"Count: 0"`;
+
+exports[`Home adds and subtracts 2`] = `"Count: 1"`;
+
+exports[`Home adds and subtracts 3`] = `"Count: 0"`;
