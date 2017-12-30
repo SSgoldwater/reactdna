@@ -6,11 +6,21 @@ ReactJS frontend stack bootstraps with Webpack, ES6, and Flux-Utils.
 ```shell
 git clone https://github.com/SSgoldwater/reactdna
 ```
-2. Enter folder and install dependencies
+2. Enter application directory
 ```shell
-cd reactdna && npm install
+cd reactdna
 ```
 
+## FrontEnd
+### Prepare
+1. Enter ui folder
+```shell
+cd ui
+```
+2. Install dependencies
+```shell
+npm install
+```
 ### Development
 1. Start dev server
 ```shell
