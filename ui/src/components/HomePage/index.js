@@ -14,7 +14,7 @@ const HomePage = ({ ...props }) => {
 
   return (
     <div>
-      Homepage
+      App Homepage
       <br />
       <p id={ `count` }>
         Count: { props.count }
