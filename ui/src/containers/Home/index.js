@@ -1,35 +1,38 @@
 import React, { Component } from 'react';
 import { Container } from 'flux/utils';
 import HomePage from 'components/HomePage';
-import CounterStore from 'data/stores/CounterStore';
+import TodoStore from 'data/stores/TodoStore';
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
-    const _counterState = CounterStore.getState();
+    const todoState = TodoStore.getState();
 
     this.state = {
-      count: _counterState.get(`count`)
+      inputValue: todoState.inputValue,
+      todos: todoState.todos
     };
   }
 
   static getStores() {
-    return [CounterStore];
+    return [TodoStore];
   }
 
   static calculateState() {
-    const _counterState = CounterStore.getState();
+    const todoState = TodoStore.getState();
 
     return {
-      count: _counterState.get(`count`)
+      inputValue: todoState.inputValue,
+      todos: todoState.todos
     };
   }
 
   render() {
     return (
       <HomePage
-        count={ this.state.count }
+        todos={ this.state.todos }
+        inputValue={ this.state.inputValue }
       />
     );
   }

@@ -1,33 +1,60 @@
 import React from 'react';
-import CounterActions from 'actions/CounterActions';
+import TodoActions from 'actions/TodoActions';
+
+import Todo from 'components/Todo';
 import styles from './styles';
 
 const HomePage = ({ ...props }) => {
+  const updateInput = (e) => {
+    e.preventDefault();
 
-  const _add = () => {
-    CounterActions.addCount();
+    TodoActions.updateInput(e.target.value)
   }
 
-  const _subtract = () => {
-    CounterActions.subtractCount();
+  const create = (e) => {
+    e.preventDefault();
+
+    TodoActions.createTodo(props.inputValue);
   }
+
+  const tasks = props.todos.map(todo =>
+    !todo.done ? (
+      <Todo
+        key={ todo.id }
+        todo={ todo }
+      />
+    ) : null
+  );
+
+  const done = props.todos.map(todo =>
+    todo.done ? (
+      <Todo
+        key={ todo.id }
+        todo={ todo }
+      />
+    ) : null
+  );
 
   return (
     <div>
-      Homepage
-      <br />
-      <p id={ `count` }>
-        Count: { props.count }
-      </p>
-      <br />
-      <button
-        id={ `addButton` }
-        onClick={ _add }
-      >Add</button>
-      <button
-        id={ `subtractButton` }
-        onClick={ _subtract }
-      >!Add</button>
+      <h4>Homepage</h4>
+      Create Todo
+      <form>
+        <input
+          type={ "text" }
+          placeholder={ "Wash the dog" }
+          value={ props.inputValue }
+          onChange={ (e) => { updateInput(e) } }
+        />
+        <button
+          id={ `addButton` }
+          onClick={ create }
+        >Create</button>
+      </form>
+      <h5>Tasks</h5>
+        { tasks }
+      <h5>Done</h5>
+        { done }
     </div>
   );
 }
