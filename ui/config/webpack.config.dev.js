@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var Dotenv = require('dotenv-webpack');
 
 var BUILD_DIR = path.resolve(process.cwd(), 'build');
 var APP_DIR = path.resolve(process.cwd(), 'src');
@@ -42,10 +43,7 @@ var config = {
   plugins: [
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-      'process.env.API_HOST': JSON.stringify(process.env.API_HOST)
-    })
+    new Dotenv()
   ],
   devServer: {
     hot: true,
