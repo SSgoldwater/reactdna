@@ -1,5 +1,5 @@
 import React from 'react';
-import TodoActions from 'actions/TodoActions';
+import todoActions from 'actions/todoActions';
 
 import Todo from 'components/Todo';
 import styles from './styles';
@@ -8,13 +8,13 @@ const HomePage = ({ ...props }) => {
   const updateInput = (e) => {
     e.preventDefault();
 
-    TodoActions.updateInput(e.target.value)
+    todoActions.updateInput(e.target.value)
   }
 
   const create = (e) => {
     e.preventDefault();
 
-    TodoActions.createTodo(props.inputValue);
+    todoActions.createTodo(props.inputValue);
   }
 
   const tasks = props.todos.map(todo =>
