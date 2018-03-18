@@ -1,6 +1,6 @@
 import { ReduceStore } from 'flux/utils';
 import AppDispatcher from 'dispatcher/AppDispatcher';
-import TodoActionTypes from 'data/actionTypes/TodoActionTypes';
+import todoActionTypes from 'data/actionTypes/todoActionTypes';
 
 class TodoStore extends ReduceStore {
   constructor() {
@@ -18,18 +18,23 @@ class TodoStore extends ReduceStore {
     let todos
 
     switch(action.type) {
-      case TodoActionTypes.UPDATE_INPUT:
+      case todoActionTypes.FETCH_TODOS:
+        return Object.assign({}, state, {
+          todos: action.todos
+        })
+
+      case todoActionTypes.UPDATE_INPUT:
         return Object.assign({}, state, {
           inputValue: action.data.value
         })
 
-      case TodoActionTypes.CREATE_TODO:
+      case todoActionTypes.CREATE_TODO:
         todos = state.todos
 
         todos.push({
-          id: Math.random(),
-          content: action.data.content,
-          done: false
+          id: action.todo.id,
+          content: action.todo.content,
+          done: action.todo.done
         })
 
         return Object.assign({}, state, {
@@ -37,9 +42,9 @@ class TodoStore extends ReduceStore {
           inputValue: ""
         })
 
-      case TodoActionTypes.FINISH_TASK:
+      case todoActionTypes.UPDATE_TODO:
         todos = state.todos.map(todo => {
-          if ( todo.id === action.data.todo.id ) {
+          if ( todo.id === action.todo.id ) {
             todo.done = true
           }
 
@@ -50,22 +55,9 @@ class TodoStore extends ReduceStore {
           todos
         })
 
-      case TodoActionTypes.REDO_TASK:
-        todos = state.todos.map(todo => {
-          if ( todo.id === action.data.todo.id ) {
-            todo.done = false
-          }
-
-          return todo
-        })
-
-        return Object.assign({}, state, {
-          todos
-        })
-
-      case TodoActionTypes.DELETE_TASK:
+      case todoActionTypes.DELETE_TODO:
         todos = state.todos.filter(todo =>
-          todo.id !== action.data.todo.id
+          todo.id !== parseInt(action.todo.id)
         )
 
         return Object.assign({}, state, {

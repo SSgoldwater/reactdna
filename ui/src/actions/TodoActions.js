@@ -1,35 +1,67 @@
 import AppDispatcher from 'dispatcher/AppDispatcher';
-import TodoActionTypes from 'data/actionTypes/TodoActionTypes';
+import todoActionTypes from 'data/actionTypes/todoActionTypes';
+import Client from 'client/Client';
+
+const client = new Client();
 
 export default {
+  fetchTodos: () => {
+    client.getTodos().then(r => {
+      AppDispatcher.dispatch({
+        type: todoActionTypes.FETCH_TODOS,
+        todos: r.data
+      });
+    });
+  },
   updateInput: (value) => {
     AppDispatcher.dispatch({
-      type: TodoActionTypes.UPDATE_INPUT,
+      type: todoActionTypes.UPDATE_INPUT,
       data: { value }
     });
   },
   createTodo: (content) => {
-    AppDispatcher.dispatch({
-      type: TodoActionTypes.CREATE_TODO,
-      data: { content }
+    const todo = JSON.stringify({
+      content,
+      done: false
+    });
+
+    client.createTodo(todo).then(r => {
+      AppDispatcher.dispatch({
+        type: todoActionTypes.CREATE_TODO,
+        todo: r.data
+      });
     });
   },
   finishTask: (todo) => {
-    AppDispatcher.dispatch({
-      type: TodoActionTypes.FINISH_TASK,
-      data: { todo }
+    const _todo = JSON.stringify(Object.assign(todo, {
+      done: true
+    }))
+
+    client.updateTodo(_todo).then(r => {
+      AppDispatcher.dispatch({
+        type: todoActionTypes.UPDATE_TODO,
+        todo: r.data
+      });
     });
   },
   redoTask: (todo) => {
-    AppDispatcher.dispatch({
-      type: TodoActionTypes.REDO_TASK,
-      data: { todo }
+    const _todo = JSON.stringify(Object.assign(todo, {
+      done: false
+    }))
+
+    client.updateTodo(_todo).then(r => {
+      AppDispatcher.dispatch({
+        type: todoActionTypes.UPDATE_TODO,
+        todo: r.data
+      });
     });
   },
   deleteTask: (todo) => {
-    AppDispatcher.dispatch({
-      type: TodoActionTypes.DELETE_TASK,
-      data: { todo }
+    client.deleteTodo(todo).then(r => {
+      AppDispatcher.dispatch({
+        type: todoActionTypes.DELETE_TODO,
+        todo: r.data
+      });
     });
   },
 };

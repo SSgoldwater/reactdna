@@ -1,9 +1,9 @@
 import keyMirror from 'key-mirror';
 
 export default keyMirror({
+  FETCH_TODOS: null,
   UPDATE_INPUT: null,
   CREATE_TODO: null,
-  FINISH_TASK: null,
-  REDO_TASK: null,
-  DELETE_TASK: null
+  UPDATE_TODO: null,
+  DELETE_TODO: null
 });

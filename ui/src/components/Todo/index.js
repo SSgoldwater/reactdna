@@ -1,21 +1,21 @@
 import React from 'react';
 
-import TodoActions from 'actions/TodoActions';
+import todoActions from 'actions/todoActions';
 import styles from './styles';
 
 const Todo = ({ ...props }) => {
   const action = props.todo.done ? (
     <span>
       <button
-        onClick={ () => { TodoActions.redoTask(props.todo) } }
+        onClick={ () => { todoActions.redoTask(props.todo) } }
       >Redo</button>
       <button
-        onClick={ () => { TodoActions.deleteTask(props.todo) } }
+        onClick={ () => { todoActions.deleteTask(props.todo) } }
       >Remove</button>
     </span>
   ) : (
     <button
-      onClick={ () => { TodoActions.finishTask(props.todo) } }
+      onClick={ () => { todoActions.finishTask(props.todo) } }
     >Done</button>
   )
 

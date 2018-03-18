@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 const neo4j = require('neo4j-driver').v1;
 
@@ -7,60 +8,91 @@ const session = driver.session();
 
 const api = express();
 
-api.get("/todos/all", (req, res) => {
+api.get("/todos", (req, res) => {
   const resultPromise = session.readTransaction(tx => tx.run(
-    'MATCH (t:Todo) RETURN t;'
+    'MATCH (t:Todo)\
+     RETURN t;'
   ));
 
   resultPromise.then(result => {
     session.close();
-    res.send(result.records);
+
+    const response = result.records.map(rec => ({
+      id: rec._fields[0].identity.low,
+      done: rec._fields[0].properties.done,
+      content: rec._fields[0].properties.content
+    }))
+
+    res.send(response);
     driver.close();
   });
 });
 
 api.post("/todos/create", (req, res) => {
-  const todo = req.body.todo;
+  const todo = req.body;
 
   const resultPromise = session.writeTransaction(tx => tx.run(
-    `CREATE (t:Todo { content: "${todo.content}", done: ${todo.done} }) RETURN t;`
+    `CREATE (t:Todo { content: "${todo.content}", done: ${todo.done} })\
+     RETURN t;`
   ));
 
   resultPromise.then(result => {
+    const response = result.records.map(rec => ({
+      id: rec._fields[0].identity.low,
+      done: rec._fields[0].properties.done,
+      content: rec._fields[0].properties.content
+    }))[0];
+
     session.close();
-    res.send(result.records);
+    res.send(response);
     driver.close();
   });
 });
 
-api.post("/todos/update/:id", (req, res) => {
-  const updates = req.body.updates;
+api.post("/todos/update", (req, res) => {
+  const todo = req.body;
 
   const transaction = session.writeTransaction(tx => tx.run(
-    `MATCH (t:Todo) WHERE ID (t) = ${req.params.id} SET t.content = '${updates.content}' RETURN t`
+    `MATCH (t:Todo)\
+     WHERE ID (t) = ${todo.id}\
+     SET t.content = '${todo.content}', t.done = ${todo.done}\
+     RETURN t`
   ));
 
   transaction.then(result => {
+    const response = result.records.map(rec => ({
+      id: rec._fields[0].identity.low,
+      done: rec._fields[0].properties.done,
+      content: rec._fields[0].properties.content
+    }))[0];
+
     session.close();
-    res.send(result.records);
+    res.send(result);
     driver.close();
   });
 });
 
-api.delete("/todos/delete/:id", (req, res) => {
+api.post("/todos/delete/:id", (req, res) => {
+  const id = req.params.id;
+
   const resultPromise = session.writeTransaction(tx => tx.run(
-    `MATCH (t:Todo) WHERE ID (t) = ${req.params.id} DETACH DELETE t;`
+    `MATCH (t:Todo)\
+     WHERE ID (t) = ${id}\
+     DETACH\
+     DELETE t;`
   ));
 
   resultPromise.then(result => {
     session.close();
-    res.send(true);
+    res.send({ id });
     driver.close();
   });
 });
 
 const app = express();
 
+app.options('*', cors())
+app.use(cors());
 app.use(bodyParser.json());
 app.use("/api", api);
 app.listen(8088);

@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { Container } from 'flux/utils';
 import HomePage from 'components/HomePage';
 import TodoStore from 'data/stores/TodoStore';
+import todoActions from 'actions/todoActions';
 
 class Home extends Component {
   constructor(props) {
     super(props);
+
+    todoActions.fetchTodos();
 
     const todoState = TodoStore.getState();
 
