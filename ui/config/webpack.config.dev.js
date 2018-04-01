@@ -46,6 +46,8 @@ var config = {
     new Dotenv()
   ],
   devServer: {
+    contentBase: BUILD_DIR,
+    host: "0.0.0.0",
     hot: true,
     inline: true,
     historyApiFallback: true

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/jest",
-    "start": "./node_modules/.bin/webpack-dev-server --config config/webpack.config.dev.js --content-base=build/",
+    "start": "./node_modules/.bin/webpack-dev-server --config config/webpack.config.dev.js",
     "build": "./node_modules/.bin/webpack --config config/webpack.config.prod.js",
     "mobile-init": "cordova create cordova com.dna.react DNA && cd cordova && cordova platform add android && rm -rf www/index.html && cp ../build/mobileIndex.html www/index.html && cd ../ && ./buildMobile.sh"
   },
