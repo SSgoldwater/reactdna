@@ -1,15 +1,14 @@
 version: '3'
 
 services:
-
-  dna-ui:
-    container_name: dna-ui
+  ui:
+    container_name: ui
     build:
       context: ./ui
       dockerfile: Dockerfile
     volumes:
-      - '.:/src'
-      - '/node_modules'
+      - '${PWD}/src:/src'
+      - '${PWD}/build:/build'
     ports:
       - '8080:8080'
 
