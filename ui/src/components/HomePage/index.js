@@ -42,7 +42,7 @@ const HomePage = ({ ...props }) => {
       <form>
         <input
           type={ "text" }
-          placeholder={ "Wash it" }
+          placeholder={ "Wash the car" }
           value={ props.inputValue }
           onChange={ (e) => { updateInput(e) } }
         />
