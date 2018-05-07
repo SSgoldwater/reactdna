@@ -102,3 +102,4 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use("/api", api);
 app.listen(8088);
+console.log("Listening on port 8088")
