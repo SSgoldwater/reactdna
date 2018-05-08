@@ -43,9 +43,14 @@ var config = {
   plugins: [
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new Dotenv()
+    new Dotenv(),
+    new require('copy-webpack-plugin')([
+      { from: '../build/index.html' }
+    ])
   ],
   devServer: {
+    contentBase: BUILD_DIR,
+    host: "0.0.0.0",
     hot: true,
     inline: true,
     historyApiFallback: true

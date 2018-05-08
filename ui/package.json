@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/jest",
-    "start": "./node_modules/.bin/webpack-dev-server --config config/webpack.config.dev.js --content-base=build/",
+    "start": "./node_modules/.bin/webpack-dev-server --config config/webpack.config.dev.js",
     "build": "./node_modules/.bin/webpack --config config/webpack.config.prod.js",
-    "mobile-init": "cordova create cordova com.dna.react DNA && cd cordova && cordova platform add android && rm -rf www/index.html && cp ../build/mobileIndex.html www/index.html && cd ../ && ./buildMobile.sh"
+    "mobile-init": "cordova create cordova com.dna.react DNA && cd cordova && cordova platform add android && rm -rf www/index.html && cp ../build/index.mobile.html www/index.html && cd ../ && ./buildMobile.sh"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/SSgoldwater/reactdna#readme",
   "dependencies": {
+    "copy-webpack-plugin": "^4.5.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
   },
@@ -32,13 +33,14 @@
     "babel-core": "^6.26.0",
     "babel-jest": "^21.2.0",
     "babel-loader": "^7.1.2",
-    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "dotenv-webpack": "^1.5.5",
     "enzyme": "^3.1.1",
     "enzyme-adapter-react-16": "^1.0.4",
     "flux": "^3.1.3",
+    "html-loader": "^0.5.5",
     "jest": "^21.2.1",
     "key-mirror": "^1.0.1",
     "react-hot-loader": "^3.1.1",

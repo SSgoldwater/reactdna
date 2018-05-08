@@ -1,5 +1,5 @@
 import React from 'react';
-import todoActions from 'actions/todoActions';
+import todoActions from '../../actions/todoActions';
 
 import Todo from 'components/Todo';
 import styles from './styles';
@@ -42,7 +42,7 @@ const HomePage = ({ ...props }) => {
       <form>
         <input
           type={ "text" }
-          placeholder={ "Wash the dog" }
+          placeholder={ "Wash the car" }
           value={ props.inputValue }
           onChange={ (e) => { updateInput(e) } }
         />

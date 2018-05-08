@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  ui:
+    container_name: ui
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    volumes:
+      - '${PWD}/ui/src:/src'
+      - '${PWD}/ui/build:/build'
+    ports:
+      - '8080:8080'
+
+  api:
+    container_name: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8088:8088"
+    environment:
+      DB_HOST: "bolt://host.docker.internal:7687"
+
+  neo4j:
+    image: neo4j:latest
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH: "none"
